@@ -1,0 +1,10 @@
+name = "animated-octo-funicular"
+compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./"
+not_found_handling = "single-page-application"
+
+[vars]
+LOCKED_PATH = "/Xxl+Xxl+Magazine+xxl+nutrition+xxl+美國職籃聯盟雜誌+xxl+sport+&+vildmark+xxl+sport+&+villmark"
+LOCKED_URL = "https://animated-octo-funicular.kofecop.workers.dev/Xxl+Xxl+Magazine+xxl+nutrition+xxl+美國職籃聯盟雜誌+xxl+sport+&+vildmark+xxl+sport+&+villmark"

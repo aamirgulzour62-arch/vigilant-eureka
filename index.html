@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Featured HD Media Highlights</title>
+  <meta name="description" content="Watch curated full HD visual highlights and featured streams." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+
+  <!-- =====================================================================
+       1. FACEBOOK PREVIEW META TAGS (GitHub / Cloudflare Pages mein Facebook
+          seedha yahan <head> se Preview Image uthata hai — yeh image page ke
+          bahir bilkul show nahi hogi, sirf Facebook share card mein dikhegi)
+       ===================================================================== -->
+  <meta property="og:type" content="https://google.com" />
+  <meta property="og:title" content="💗💙💜💚" />
+  <meta property="og:description" content="💖🧡💛💚" />
+  <meta property="og:image" content="https://picsum.photos/seed/fbcloudpreview/1200/630" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://picsum.photos/seed/fbcloudpreview/1200/630" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0b0f17;
+      color: #f3f4f6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 12px;
+    }
+
+    /* Main Container — Sirf Image Sections */
+    .gallery-container {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+    }
+
+    /* Har Image Section (Clickable Link + Image + Play Button) */
+    .image-section {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background-color: #151c28;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .image-section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease, filter 0.3s ease;
+    }
+
+    .image-section:hover img {
+      transform: scale(1.03);
+      filter: brightness(0.86);
+    }
+
+    /* Overlay & Center Play Button */
+    .image-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-button {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(255, 45, 85, 0.94);
+      border: 3px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(255, 45, 85, 0.55);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      animation: pulseGlow 2s infinite;
+    }
+
+    .image-section:hover .play-button {
+      transform: scale(1.12);
+      background: #ff1744;
+    }
+
+    .play-button svg {
+      width: 30px;
+      height: 30px;
+      fill: #ffffff;
+      margin-left: 4px;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 45, 85, 0.65);
+      }
+      70% {
+        box-shadow: 0 0 0 16px rgba(255, 45, 85, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 45, 85, 0);
+      }
+    }
+
+    /* Corner HD & Duration Badges */
+    .badge-hd {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.72);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-duration {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* Video Timeline Bar at Bottom of Each Image */
+    .player-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .player-bar-fill {
+      width: 38%;
+      height: 100%;
+      background: #ff2d55;
+    }
+
+    /* Subtle Compliance Footer (Facebook Bot Trust ke liye) */
+    .compliance-footer {
+      max-width: 720px;
+      margin: 28px auto 4px;
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================================
+       MAIN IMAGE SECTIONS (No Auto-Redirect — 100% Facebook Safe)
+       1. href="..." ke andar apna Target Link lagayein (jahan click par jana hai)
+       2. src="..." ke andar apni Image ka Link lagayein
+       ===================================================================== -->
+  <main class="gallery-container">
+
+    <!-- SECTION 1 -->
+    <a class="image-section" href="https://escalatorquitdisguises.com/w9c4ikxt?key=7e2c97d899018ae0e47998b3dc46c846" target="_blank" rel="noopener noreferrer">
+      <img src="https://ghgj-dqx.pages.dev/577887f5354b81c4af9365ebb225ca04.gif" loading="lazy" />
+      <div class="image-overlay">
+        <div class="play-button">
+          <svg viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7z"></path></svg>
+        </div>
+      </div>
+      <span class="badge-hd">HD 1080p</span>
+      <span class="badge-duration">04:18</span>
+      <div class="player-bar"><div class="player-bar-fill"></div></div>
+    </a>
+
+    <!-- SECTION 2 -->
+    <a class="image-section" href="https://escalatorquitdisguises.com/w9c4ikxt?key=7e2c97d899018ae0e47998b3dc46c846" target="_blank" rel="noopener noreferrer">
+      <img src="https://jjhf-6gt.pages.dev/e1752b2e1d9e3ecfde2e99ca415e4696.gif" loading="lazy" />
+      <div class="image-overlay">
+        <div class="play-button">
+          <svg viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7z"></path></svg>
+        </div>
+      </div>
+      <span class="badge-hd">HD</span>
+      <span class="badge-duration">02:54</span>
+      <div class="player-bar"><div class="player-bar-fill"></div></div>
+    </a>
+
+    <!-- SECTION 3 -->
+    <a class="image-section" href="https://escalatorquitdisguises.com/w9c4ikxt?key=7e2c97d899018ae0e47998b3dc46c846" target="_blank" rel="noopener noreferrer">
+      <img src="https://fhhj-daw.pages.dev/8c2d78cd635d3a85f0162f3da7b13da2.gif" loading="lazy" />
+      <div class="image-overlay">
+        <div class="play-button">
+          <svg viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7z"></path></svg>
+        </div>
+      </div>
+      <span class="badge-hd">4K</span>
+      <span class="badge-duration">06:12</span>
+      <div class="player-bar"><div class="player-bar-fill"></div></div>
+    </a>
+
+    <!-- SECTION 4 -->
+    <a class="image-section" href="https://escalatorquitdisguises.com/w9c4ikxt?key=7e2c97d899018ae0e47998b3dc46c846" target="_blank" rel="noopener noreferrer">
+      <img src="https://raw.githubusercontent.com/agulzr333/vigilant-octo-fishstick/refs/heads/main/Screenshot%202026-10-14%20235758.png" loading="lazy" />
+      <div class="image-overlay">
+        <div class="play-button">
+          <svg viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7z"></path></svg>
+        </div>
+      </div>
+      <span class="badge-hd">HD</span>
+      <span class="badge-duration">03:39</span>
+      <div class="player-bar"><div class="player-bar-fill"></div></div>
+    </a>
+
+  </main>
+
+  <footer class="compliance-footer">
+    &copy; 2026 Media Hub &bull; Privacy &amp; Terms Compliant
+  </footer>
+
+</body>
+</html>
